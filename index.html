@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mindmap WaveHub | From research questions to data-driven answers</title>
+<meta name="description" content="Mindmap WaveHub is a research hub supporting students, researchers and organisations with thesis support, data analysis, AI and machine learning, and engineering software. Online, worldwide.">
+<meta property="og:title" content="Mindmap WaveHub">
+<meta property="og:description" content="Research support for every field: thesis support, data analysis, AI and machine learning, engineering software, and training.">
+<meta property="og:image" content="https://mindmapwavehub.github.io/assets/github-avatar.png">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #13306E;
+    --navy-deep: #0C2253;
+    --blue: #1A9CD8;
+    --teal: #2FB89A;
+    --green: #6CB43C;
+    --ink: #13213F;
+    --muted: #586380;
+    --bg: #FFFFFF;
+    --mist: #F1F6FA;
+    --line: #DCE5EE;
+    --wave: linear-gradient(90deg, var(--navy) 0%, var(--blue) 45%, var(--teal) 70%, var(--green) 100%);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.65 "Source Sans 3", system-ui, sans-serif; }
+  img { max-width: 100%; display: block; }
+  a { color: var(--navy); }
+  h1, h2, h3 { font-family: "Outfit", sans-serif; line-height: 1.12; margin: 0; color: var(--navy-deep); }
+  :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 720px) { .wrap { padding: 0 32px; } }
+
+  /* Header */
+  .top { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand img { width: 40px; height: auto; }
+  .brand span { white-space: nowrap; font-family: "Outfit", sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--navy); letter-spacing: -.01em; }
+  .brand b { font-weight: 700; color: var(--blue); }
+  .menu { display: none; gap: 26px; list-style: none; margin: 0; padding: 0; }
+  .menu a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: .98rem; }
+  .menu a:hover { color: var(--navy); }
+  @media (min-width: 900px) { .menu { display: flex; } }
+
+  .btn { white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 999px; font-weight: 600; text-decoration: none; font-size: 1rem; border: 2px solid transparent; cursor: pointer; font-family: inherit; }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+  .btn-wa { background: #1F9E55; color: #fff; }
+  .btn-wa:hover { background: #17824A; }
+  .btn-main { background: var(--navy); color: #fff; }
+  .btn-main:hover { background: var(--navy-deep); }
+  .btn-ghost { border-color: var(--navy); color: var(--navy); background: transparent; }
+  .btn-ghost:hover { background: var(--mist); }
+  .top .btn { padding: 9px 16px; font-size: .92rem; }
+  @media (max-width: 420px) { .brand span { font-size: 1.05rem; } .brand img { width: 34px; } .top .btn { padding: 8px 13px; font-size: .88rem; } }
+
+  /* Hero */
+  .hero { padding: 56px 0 0; overflow: hidden; }
+  .hero-grid { display: grid; gap: 40px; align-items: center; }
+  @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.15fr .85fr; gap: 56px; } }
+  .hero h1 { font-size: clamp(2.3rem, 5.2vw, 3.7rem); letter-spacing: -.025em; max-width: 15ch; }
+  .hero .lede { font-size: 1.22rem; color: var(--muted); max-width: 52ch; margin: 22px 0 30px; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero-photo { position: relative; border-radius: 22px; overflow: hidden; aspect-ratio: 4 / 5; background: var(--navy) center / cover no-repeat; box-shadow: 0 18px 40px rgba(12,34,83,.18); }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 40% center; }
+  .hero-photo::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: var(--wave); }
+  .hero-photo .badge { position: absolute; left: 16px; bottom: 22px; display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,.95); padding: 8px 14px 8px 8px; border-radius: 999px; font-weight: 600; color: var(--navy); font-size: .95rem; }
+  .hero-photo .badge img { width: 30px; height: auto; }
+  @media (max-width: 899px) { .hero-photo { aspect-ratio: 16 / 10; } }
+  .proof { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0 28px; margin-top: 52px; border-top: 1px solid var(--line); }
+  .proof div { padding: 22px 0; }
+  .proof strong { display: block; font-family: "Outfit", sans-serif; font-size: 2.3rem; font-weight: 700; color: var(--navy); line-height: 1; }
+  .proof span { color: var(--muted); }
+
+  /* The signature: the logo's wave as a band between hero and content */
+  .waveband { display: block; width: 100%; height: 70px; margin-top: 8px; }
+
+  section { padding: 76px 0; }
+  .sec-head { max-width: 640px; margin-bottom: 40px; }
+  .sec-head h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); letter-spacing: -.015em; }
+  .sec-head p { color: var(--muted); margin: 12px 0 0; font-size: 1.1rem; }
+
+  /* About */
+  .about { background: var(--mist); }
+  .about-grid { display: grid; gap: 32px; }
+  @media (min-width: 900px) { .about-grid { grid-template-columns: .9fr 1.1fr; gap: 64px; } }
+  .about-grid p { margin: 0 0 1em; max-width: 62ch; }
+  .about-grid p:last-child { margin-bottom: 0; }
+
+  /* Services */
+  .feature { background: var(--navy); color: #E7EEF8; border-radius: 18px; padding: 32px; display: grid; gap: 20px; position: relative; overflow: hidden; margin-bottom: 36px; }
+  @media (min-width: 820px) { .feature { grid-template-columns: 1fr 1.3fr; padding: 44px; gap: 40px; } }
+  .feature::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: var(--wave); }
+  .feature h3 { color: #fff; font-size: clamp(1.6rem, 3vw, 2.1rem); }
+  .feature p { margin: 0; }
+  .stages { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; }
+  .stages li { padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.28); font-size: .95rem; color: #fff; }
+
+  .svc-list { display: grid; gap: 0 48px; list-style: none; margin: 0; padding: 0; }
+  @media (min-width: 760px) { .svc-list { grid-template-columns: 1fr 1fr; } }
+  .svc-list li { display: grid; grid-template-columns: 14px 1fr; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .svc-list li::before { content: ""; width: 10px; height: 10px; border-radius: 50%; margin-top: 9px; background: var(--c, var(--blue)); }
+  .svc-list li:nth-child(3n+2) { --c: var(--teal); }
+  .svc-list li:nth-child(3n+3) { --c: var(--green); }
+  .svc-list h3 { font-size: 1.15rem; margin-bottom: 2px; }
+  .svc-list p { margin: 0; color: var(--muted); font-size: 1rem; }
+
+  /* Fields */
+  .fields { background: var(--mist); }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; margin: 0; padding: 0; }
+  .chips li { background: #fff; border: 1px solid var(--line); padding: 10px 18px; border-radius: 999px; font-weight: 600; color: var(--navy); }
+  .chips li.any { background: transparent; border-style: dashed; color: var(--muted); font-weight: 400; }
+
+  /* Steps: a real sequence, so numbered */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 28px; counter-reset: s; }
+  @media (min-width: 820px) { .steps { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
+  .steps li { counter-increment: s; position: relative; padding-top: 58px; }
+  .steps li::before { content: counter(s); position: absolute; top: 0; left: 0; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; font-family: "Outfit", sans-serif; font-weight: 700; color: #fff; background: var(--navy); }
+  .steps li:nth-child(2)::before { background: var(--blue); }
+  .steps li:nth-child(3)::before { background: var(--teal); }
+  .steps li:nth-child(4)::before { background: var(--green); }
+  @media (min-width: 820px) {
+    .steps li::after { content: ""; position: absolute; top: 21px; left: 54px; right: -12px; height: 2px; background: var(--line); }
+    .steps li:last-child::after { display: none; }
+  }
+  .steps h3 { font-size: 1.2rem; margin-bottom: 6px; }
+  .steps p { margin: 0; color: var(--muted); }
+
+  /* Training */
+  .training-box { border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: grid; align-items: center; background: #fff; }
+  @media (min-width: 820px) { .training-box { grid-template-columns: 1fr 1.1fr; } }
+  .training-box > img { width: 100%; height: 100%; min-height: 240px; max-height: 360px; object-fit: cover; background: var(--mist); }
+  .training-text { padding: 32px; }
+  @media (min-width: 820px) { .training-text { padding: 40px 44px; } }
+  .training-text .btn { margin-top: 22px; }
+  .training-box h2 { font-size: clamp(1.7rem, 3.5vw, 2.2rem); }
+  .training-box p { margin: 10px 0 0; color: var(--muted); max-width: 60ch; }
+  .soon { display: inline-block; font-size: .9rem; font-weight: 600; color: var(--teal); margin-bottom: 8px; }
+
+
+  /* Confidentiality promise */
+  .promise { margin-top: 44px; display: flex; gap: 14px; align-items: flex-start; background: var(--mist); border-left: 4px solid var(--teal); border-radius: 10px; padding: 18px 20px; }
+  .promise svg { width: 26px; height: 26px; flex: none; fill: var(--teal); margin-top: 1px; }
+  .promise p { margin: 0; }
+  .promise strong { color: var(--navy-deep); }
+
+  /* FAQ */
+  .faq { background: var(--mist); }
+  .faq-grid { display: grid; gap: 8px; }
+  @media (min-width: 900px) { .faq-grid { grid-template-columns: .8fr 1.2fr; gap: 56px; } }
+  .faq-list details { background: #fff; border: 1px solid var(--line); border-radius: 12px; margin-bottom: 10px; }
+  .faq-list summary { cursor: pointer; list-style: none; padding: 18px 52px 18px 20px; font-weight: 600; color: var(--navy-deep); position: relative; font-size: 1.05rem; }
+  .faq-list summary::-webkit-details-marker { display: none; }
+  .faq-list summary::after { content: "+"; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; font-weight: 400; color: var(--blue); }
+  .faq-list details[open] summary::after { content: "\2212"; }
+  .faq-list details p { margin: 0; padding: 0 20px 18px; color: var(--muted); }
+  .form-note { grid-column: 1 / -1; margin: 0; font-size: .92rem; color: var(--muted); }
+
+  /* Contact */
+  .contact { background: var(--navy-deep); color: #D9E3F2; }
+  .contact .sec-head h2 { color: #fff; }
+  .contact .sec-head p { color: #AFC0DA; }
+  .contact-grid { display: grid; gap: 40px; }
+  @media (min-width: 900px) { .contact-grid { grid-template-columns: .8fr 1.2fr; gap: 56px; } }
+  .ways { list-style: none; margin: 0; padding: 0; }
+  .ways li { padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.12); }
+  .ways small { display: block; color: #8FA3C4; font-size: .9rem; }
+  .ways a { color: #fff; font-weight: 600; text-decoration: none; font-size: 1.08rem; }
+  .ways a:hover { text-decoration: underline; }
+  .ways .nums a { display: block; }
+
+  form { background: #fff; color: var(--ink); border-radius: 18px; padding: 28px; display: grid; gap: 16px; }
+  @media (min-width: 600px) { form { grid-template-columns: 1fr 1fr; padding: 34px; } }
+  .field { display: grid; gap: 6px; grid-template-rows: 1fr auto; }
+  .field label { align-self: end; }
+  .field.full { grid-column: 1 / -1; }
+  label { font-weight: 600; font-size: .95rem; color: var(--navy-deep); }
+  label em { font-style: normal; font-weight: 400; color: var(--muted); }
+  input, select, textarea { font: inherit; color: var(--ink); padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 10px; background: #fff; width: 100%; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,156,216,.18); }
+  textarea { min-height: 130px; resize: vertical; }
+  .form-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+  #formStatus { margin: 0; font-weight: 600; }
+  #formStatus.ok { color: #1F7A45; }
+  #formStatus.err { color: #B42318; }
+  .hp { position: absolute; left: -9999px; }
+
+  footer { background: var(--navy-deep); color: #8FA3C4; font-size: .95rem; }
+  footer .wrap { border-top: 1px solid rgba(255,255,255,.12); padding-top: 26px; padding-bottom: 34px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; }
+  footer a { color: #C9D6EA; }
+
+  .wa-float { position: fixed; right: 16px; bottom: 16px; z-index: 20; width: 56px; height: 56px; border-radius: 50%; background: #1F9E55; display: grid; place-items: center; box-shadow: 0 6px 18px rgba(12,34,83,.28); }
+  .wa-float svg { width: 28px; height: 28px; }
+  .wa-float:hover { background: #17824A; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Mindmap WaveHub home">
+      <img src="assets/icon.png" alt="" width="40" height="37">
+      <span>Mindmap <b>WaveHub</b></span>
+    </a>
+    <ul class="menu">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#fields">Fields</a></li>
+      <li><a href="#process">How we work</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="btn btn-main" href="#contact">Get in touch</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <h1>From research questions to data-driven answers</h1>
+          <p class="lede">Mindmap WaveHub helps students, researchers and organisations with thesis work, data analysis, AI and machine learning, and engineering software. We work online with clients worldwide and meet in person across Ghana.</p>
+          <div class="ctas">
+            <a class="btn btn-wa" href="https://wa.me/233271346488" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3Z"/></svg>
+              Chat on WhatsApp
+            </a>
+            <a class="btn btn-ghost" href="#contact">Send an enquiry</a>
+          </div>
+        </div>
+        <div class="hero-photo">
+          <img src="https://images.pexels.com/photos/6963944/pexels-photo-6963944.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="A researcher analysing data on two computer monitors" width="1000" height="1250">
+          <span class="badge"><img src="assets/icon.png" alt="" width="30" height="28">Mindmap WaveHub</span>
+        </div>
+      </div>
+
+      <div class="proof">
+        <div><strong>300+</strong><span>students supported across institutions in Ghana and abroad</span></div>
+        <div><strong>7</strong><span>companies and organisations worked with</span></div>
+        <div><strong>Since 2023</strong><span>working online with clients anywhere</span></div>
+      </div>
+    </div>
+
+    <svg class="waveband" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="wg" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stop-color="#13306E"/><stop offset=".45" stop-color="#1A9CD8"/>
+          <stop offset=".72" stop-color="#2FB89A"/><stop offset="1" stop-color="#6CB43C"/>
+        </linearGradient>
+      </defs>
+      <path d="M0,46 C240,10 420,70 720,40 C1000,12 1200,62 1440,26 L1440,70 L0,70 Z" fill="#F1F6FA"/>
+      <path d="M0,46 C240,10 420,70 720,40 C1000,12 1200,62 1440,26" fill="none" stroke="url(#wg)" stroke-width="4"/>
+    </svg>
+  </div>
+
+  <section id="about" class="about">
+    <div class="wrap about-grid">
+      <div class="sec-head" style="margin-bottom:0">
+        <h2>About Mindmap WaveHub</h2>
+      </div>
+      <div>
+        <p>Mindmap WaveHub is a research hub founded in 2023. We support researchers, students and organisations across different fields.</p>
+        <p>We work mainly with artificial intelligence and machine learning, data analytics, programming, and engineering software tools. We apply these to projects in engineering, computer science, health, business, the social sciences and other areas.</p>
+        <p>We help with research design, data analysis, modelling, writing, and editing and formatting. We also run webinars and hands-on workshops, and our team can present findings in person at companies in Ghana and abroad.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>What we help with</h2>
+        <p>Pick one service or combine several. Tell us what you need and we'll put together a plan for your project.</p>
+      </div>
+
+      <div class="feature">
+        <div>
+          <h3>End-to-end thesis support</h3>
+        </div>
+        <div>
+          <p>Support for every stage of your thesis or dissertation, for undergraduate, master's and PhD work.</p>
+          <ul class="stages" style="margin-top:18px">
+            <li>Topic and proposal</li><li>Literature review</li><li>Methodology</li><li>Data analysis</li>
+            <li>Write-up</li><li>Formatting</li><li>Defence preparation</li>
+          </ul>
+        </div>
+      </div>
+
+      <ul class="svc-list">
+        <li><div><h3>Research design and methodology</h3><p>Choosing the right approach, sampling, instruments and research framework.</p></div></li>
+        <li><div><h3>Data analysis and statistics</h3><p>Quantitative and qualitative analysis with SPSS, R, Stata and Excel.</p></div></li>
+        <li><div><h3>AI and machine learning</h3><p>Building, training and evaluating models in Python and MATLAB.</p></div></li>
+        <li><div><h3>Engineering software tools</h3><p>We work with engineering design, analysis and simulation software across disciplines.</p></div></li>
+        <li><div><h3>Programming and software development</h3><p>Scripts, tools and applications for research and organisations.</p></div></li>
+        <li><div><h3>Simulation and modelling</h3><p>System models, simulations and scenario analysis.</p></div></li>
+        <li><div><h3>Literature review support</h3><p>Finding, organising and synthesising relevant studies.</p></div></li>
+        <li><div><h3>Editing, proofreading and formatting</h3><p>APA, IEEE, Harvard and university templates.</p></div></li>
+        <li><div><h3>Presentation and defence preparation</h3><p>Slides, speaker notes and practice for your presentation or defence.</p></div></li>
+        <li><div><h3>Training</h3><p>Webinars and hands-on workshops on research tools and methods.</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="fields" class="fields">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Fields we support</h2>
+        <p>Our core skills in data, AI and software apply across disciplines.</p>
+      </div>
+      <ul class="chips">
+        <li>Engineering</li><li>Computer science</li><li>Health and medical sciences</li><li>Business and management</li>
+        <li>Social sciences</li><li>Education</li><li>Agriculture and environment</li><li>Economics and finance</li>
+        <li class="any">Don't see your field? Ask us.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>How we work</h2>
+      </div>
+      <ol class="steps">
+        <li><h3>Tell us what you need</h3><p>Message us on WhatsApp, email or the form with your topic, stage and deadline.</p></li>
+        <li><h3>Agree the plan</h3><p>We confirm the scope, timeline and cost with you before any work starts.</p></li>
+        <li><h3>We get to work</h3><p>We keep you updated as the work progresses.</p></li>
+        <li><h3>Delivery</h3><p>You receive the completed work by the agreed date.</p></li>
+      </ol>
+      <div class="promise">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Zm-1 14-4-4 1.4-1.4L11 13.2l4.6-4.6L17 10l-6 6Z"/></svg>
+        <p><strong>Your work stays confidential.</strong> We never share your project, data or personal details with anyone else.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="training" style="padding-top:0">
+    <div class="wrap">
+      <div class="training-box">
+        <img src="https://images.unsplash.com/photo-1573164574572-cb89e39749b4?auto=format&fit=crop&w=1000&q=75" alt="A group working together on laptops around a table" loading="lazy" width="1000" height="667">
+        <div class="training-text">
+          <span class="soon">Coming soon</span>
+          <h2>Webinars and workshops</h2>
+          <p>We're preparing sessions on research methods, data analysis and software tools. Message us to hear when the next one is announced.</p>
+          <a class="btn btn-ghost" href="#contact">Notify me</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="faq">
+    <div class="wrap faq-grid">
+      <div class="sec-head">
+        <h2>Frequently asked questions</h2>
+        <p>Can't find your answer? <a href="#contact">Send us a message</a>.</p>
+      </div>
+      <div class="faq-list">
+        <details>
+          <summary>How much does it cost?</summary>
+          <p>Every project is different. We give you a quote based on the work involved, the level (undergraduate, master's, PhD or company project) and your deadline. You'll know the cost before any work starts.</p>
+        </details>
+        <details>
+          <summary>How long does a project take?</summary>
+          <p>It depends on the size of the work. Tell us your deadline when you get in touch, and we'll agree a timeline with you at the start.</p>
+        </details>
+        <details>
+          <summary>How do I pay?</summary>
+          <p>We'll share the payment options with you when we confirm your plan and quote.</p>
+        </details>
+        <details>
+          <summary>Is my work kept confidential?</summary>
+          <p>Yes. We never share your project, data or personal details with anyone else.</p>
+        </details>
+        <details>
+          <summary>Who do you work with?</summary>
+          <p>Undergraduate, master's and PhD students, researchers, and companies and organisations, in Ghana and abroad. We work online, so location isn't a barrier.</p>
+        </details>
+        <details>
+          <summary>Can we meet in person?</summary>
+          <p>Yes. We can meet you anywhere in Ghana, and our team can come to your company for meetings or presentations. We can also travel abroad when needed. For travel outside Ghana, we agree with you beforehand how the travel costs will be covered.</p>
+        </details>
+        <details>
+          <summary>Can I get help with just one part of my project?</summary>
+          <p>Yes. You can choose a single service, such as data analysis or formatting, or combine several.</p>
+        </details>
+        <details>
+          <summary>What do I need to get started?</summary>
+          <p>Your topic or project brief, any guidelines from your institution or organisation, and your deadline. Send them by WhatsApp, email or the form.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Get in touch</h2>
+        <p>Tell us about your project and we'll get back to you.</p>
+      </div>
+      <div class="contact-grid">
+        <ul class="ways">
+          <li><small>Email</small><a href="mailto:mindmapwavehub@gmail.com">mindmapwavehub@gmail.com</a></li>
+          <li class="nums"><small>WhatsApp and phone</small>
+            <a href="https://wa.me/233271346488" target="_blank" rel="noopener">027 134 6488</a>
+            <a href="https://wa.me/233556135446" target="_blank" rel="noopener">055 613 5446</a>
+          </li>
+          <li><small>Where we work</small><span style="color:#fff;font-weight:600">Online worldwide, and in person across Ghana</span></li>
+        </ul>
+
+        <form id="contactForm" action="https://formspree.io/f/mgaavnen" method="POST">
+          <div class="field"><label for="name">Name</label><input id="name" name="name" required autocomplete="name"></div>
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required autocomplete="email"></div>
+          <div class="field"><label for="phone">WhatsApp or phone <em>(optional)</em></label><input id="phone" name="phone" type="tel" autocomplete="tel"></div>
+          <div class="field"><label for="institution">Institution or company <em>(optional)</em></label><input id="institution" name="institution"></div>
+          <div class="field full"><label for="service">What do you need help with?</label>
+            <select id="service" name="service" required>
+              <option value="">Choose a service</option>
+              <option>End-to-end thesis support</option>
+              <option>Research design and methodology</option>
+              <option>Data analysis and statistics</option>
+              <option>AI and machine learning</option>
+              <option>Engineering software tools</option>
+              <option>Programming and software development</option>
+              <option>Simulation and modelling</option>
+              <option>Literature review support</option>
+              <option>Editing, proofreading and formatting</option>
+              <option>Presentation and defence preparation</option>
+              <option>Webinars and workshops</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="field full"><label for="message">Message</label><textarea id="message" name="message" required placeholder="Your topic, what stage you're at, and your deadline"></textarea></div>
+          <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input type="hidden" name="_subject" value="New enquiry from the Mindmap WaveHub website">
+          <p class="form-note">We only use your details to reply to your enquiry. See our <a href="privacy.html">privacy note</a>.</p>
+          <div class="form-foot">
+            <button class="btn btn-main" type="submit" id="sendBtn">Send message</button>
+            <p id="formStatus" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; <span id="yr">2026</span> Mindmap WaveHub</span>
+    <span><a href="privacy.html">Privacy note</a> &nbsp; <a href="mailto:mindmapwavehub@gmail.com">mindmapwavehub@gmail.com</a></span>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/233271346488" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3Z"/></svg>
+</a>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  const form = document.getElementById('contactForm');
+  const statusEl = document.getElementById('formStatus');
+  const sendBtn = document.getElementById('sendBtn');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    sendBtn.disabled = true; sendBtn.textContent = 'Sending...';
+    statusEl.className = ''; statusEl.textContent = '';
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      if (res.ok) {
+        form.reset();
+        statusEl.className = 'ok';
+        statusEl.textContent = "Message sent. We'll get back to you soon.";
+      } else {
+        throw new Error();
+      }
+    } catch {
+      statusEl.className = 'err';
+      statusEl.textContent = 'Message not sent. Please try again, or contact us on WhatsApp.';
+    } finally {
+      sendBtn.disabled = false; sendBtn.textContent = 'Send message';
+    }
+  });
+</script>
+</body>
+</html>
