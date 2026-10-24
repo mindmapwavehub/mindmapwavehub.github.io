@@ -181,8 +181,10 @@
   .field { display: grid; gap: 6px; grid-template-rows: 1fr auto; }
   .field label { align-self: end; }
   .field.full { grid-column: 1 / -1; }
+  .field[hidden] { display: none; }
   label { font-weight: 600; font-size: .95rem; color: var(--navy-deep); }
   label em { font-style: normal; font-weight: 400; color: var(--muted); }
+  input, select { height: 52px; }
   input, select, textarea { font: inherit; color: var(--ink); padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 10px; background: #fff; width: 100%; }
   input:focus, select:focus, textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,156,216,.18); }
   textarea { min-height: 130px; resize: vertical; }
@@ -415,10 +417,19 @@
         </ul>
 
         <form id="contactForm" action="https://formspree.io/f/mgaavnen" method="POST">
-          <div class="field"><label for="name">Name</label><input id="name" name="name" required autocomplete="name"></div>
+          <div class="field full"><label for="name">Full name</label><input id="name" name="name" required autocomplete="name"></div>
           <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required autocomplete="email"></div>
-          <div class="field"><label for="phone">WhatsApp or phone <em>(optional)</em></label><input id="phone" name="phone" type="tel" autocomplete="tel"></div>
-          <div class="field"><label for="institution">Institution or company <em>(optional)</em></label><input id="institution" name="institution"></div>
+          <div class="field"><label for="whatsapp">WhatsApp number</label><input id="whatsapp" name="whatsapp" type="tel" required autocomplete="tel" placeholder="e.g. 024 123 4567"></div>
+          <div class="field"><label for="phone">Phone number</label><input id="phone" name="phone" type="tel" required placeholder="Same as WhatsApp is fine"></div>
+          <div class="field"><label for="client_type">You are enquiring as</label>
+            <select id="client_type" name="client_type" required>
+              <option value="">Choose one</option>
+              <option>Institution (student or researcher)</option>
+              <option>Company or organisation</option>
+              <option>Self (individual)</option>
+            </select>
+          </div>
+          <div class="field full" id="orgField"><label for="organisation" id="orgLabel">Name of institution or company</label><input id="organisation" name="organisation"></div>
           <div class="field full"><label for="service">What do you need help with?</label>
             <select id="service" name="service" required>
               <option value="">Choose a service</option>
@@ -432,11 +443,29 @@
               <option>Literature review support</option>
               <option>Editing, proofreading and formatting</option>
               <option>Presentation and defence preparation</option>
+              <option>Company project analysis</option>
               <option>Webinars and workshops</option>
               <option>Something else</option>
             </select>
           </div>
-          <div class="field full"><label for="message">Message</label><textarea id="message" name="message" required placeholder="Your topic, what stage you're at, and your deadline"></textarea></div>
+          <div class="field full"><label for="topic">Topic or project title</label><input id="topic" name="topic" required placeholder="e.g. Effect of mobile money on small businesses in Kumasi"></div>
+          <div class="field"><label for="stage">Current stage</label>
+            <select id="stage" name="stage" required>
+              <option value="">Choose a stage</option>
+              <option>Just an idea or topic</option>
+              <option>Proposal</option>
+              <option>Literature review</option>
+              <option>Methodology</option>
+              <option>Data collection</option>
+              <option>Data analysis</option>
+              <option>Writing up</option>
+              <option>Final editing and formatting</option>
+              <option>Presentation or defence</option>
+              <option>Not applicable (company project)</option>
+            </select>
+          </div>
+          <div class="field"><label for="deadline">Deadline</label><input id="deadline" name="deadline" type="date" required></div>
+          <div class="field full"><label for="message">Short message <em>(optional)</em></label><textarea id="message" name="message" maxlength="600" placeholder="Anything else we should know"></textarea></div>
           <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
           <input type="hidden" name="_subject" value="New enquiry from the Mindmap WaveHub website">
           <p class="form-note">We only use your details to reply to your enquiry. See our <a href="privacy.html">privacy note</a>.</p>
@@ -465,6 +494,22 @@
   document.getElementById('yr').textContent = new Date().getFullYear();
 
   const form = document.getElementById('contactForm');
+  const clientType = document.getElementById('client_type');
+  const orgField = document.getElementById('orgField');
+  const orgInput = document.getElementById('organisation');
+  const orgLabel = document.getElementById('orgLabel');
+  function updateOrg() {
+    const v = clientType.value;
+    const isSelf = v.startsWith('Self') || v === '';
+    orgField.hidden = isSelf;
+    orgInput.required = !isSelf;
+    orgLabel.textContent = v.startsWith('Company') ? 'Name of company or organisation' : 'Name of institution';
+    if (isSelf) orgInput.value = '';
+  }
+  clientType.addEventListener('change', updateOrg);
+  updateOrg();
+  const dl = document.getElementById('deadline');
+  dl.min = new Date().toISOString().slice(0, 10);
   const statusEl = document.getElementById('formStatus');
   const sendBtn = document.getElementById('sendBtn');
   form.addEventListener('submit', async (e) => {
@@ -474,7 +519,7 @@
     try {
       const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
       if (res.ok) {
-        form.reset();
+        form.reset(); updateOrg();
         statusEl.className = 'ok';
         statusEl.textContent = "Message sent. We'll get back to you soon.";
       } else {
